@@ -1,0 +1,10 @@
+# Local, machine-specific dataset symlinks -- see README.md "Datasets" for how to
+# obtain and place these yourself; do not commit the actual video/image data.
+data/*
+!data/README.md
+
+__pycache__/
+*.pyc
+output/
+*.egg-info/
+*.lock
