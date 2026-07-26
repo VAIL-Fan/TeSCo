@@ -738,7 +738,6 @@ def main():
             exo_segment_loader,
             _global_description,
             _fc,
-            _use_pf,
         ) = ds.get_video(idx)
         video_name = ego_video.video_name
         parts = video_name.split("/")
