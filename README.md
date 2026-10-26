@@ -29,18 +29,23 @@ Ego-Exo4D correspondence test split:
 Text is worth **9.85 mIoU** over the same model without it.
 
 > **Comparing against us?** Published numbers on this benchmark come from more than one scorer,
-> and they differ by over an IoU point on identical predictions. Ours are on the LM-EEC protocol.
-> Read [`docs/METRIC_SETTINGS.md`](docs/METRIC_SETTINGS.md) before you compare — it gives our
-> results under both protocols and says exactly what differs.
+> and they differ by over an IoU point on identical predictions. The paper follows the official
+> Ego-Exo4D metrics; our predictions cover the test split, so the prediction-driven variant this
+> codebase also ships agrees to 0.21 IoU (70.69 vs 70.48 on Exo→Ego). Other rows in the table are
+> not all on that protocol — O-MaMa's published figure is on its own scorer.
+> [`docs/METRIC_SETTINGS.md`](docs/METRIC_SETTINGS.md) gives our results under each and says
+> exactly what differs.
 
 ## What the text actually is
 
 <p align="center"><img src="assets/gen_text.png" width="100%"></p>
 
-A vision-language model describes the marked object in the query view — category, colour,
+A vision-language model (DAM) describes the marked object in the query view — category, colour,
 texture, material. These attributes hold across viewpoints in a way raw pixels do not, which is
-the whole premise. Captions are precomputed once per take with
-`tools/precompute_dam_frame_captions.py` and reused; they are not regenerated at inference.
+the whole premise. The paper refreshes the description **every frame**; refreshing less often is
+cheaper and measurably worse (60.40 at every frame, 59.10 every 5, 59.00 every 10). Captions are
+precomputed per frame with `tools/precompute_dam_frame_captions.py` and read from
+`text_labels/`, so inference does not call the VLM.
 
 ## Why text helps
 
@@ -105,7 +110,7 @@ Published results on this benchmark are not all on the same protocol, so all thr
 
 | | protocol | what it does |
 |---|---|---|
-| `evaluation/compute_metrics.py` | **LM-EEC** — what this paper reports | walks the prediction file; a row you did not predict is omitted |
+| `evaluation/compute_metrics.py` | **LM-EEC** — this codebase's inherited scorer | walks the prediction file; a row you did not predict is omitted |
 | `evaluation/omama_eval.py` | **O-MaMa** | walks the GT, filters by `annotated_frames`, resizes the GT onto your prediction's grid |
 | `evaluation/unified_eval.py` | **official benchmark** — use this to compare methods | walks the GT, scores a missing prediction as 0, puts both sides on a 480×480 grid |
 

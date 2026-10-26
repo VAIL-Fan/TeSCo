@@ -5,10 +5,14 @@ are in circulation, they disagree by over an IoU point on identical predictions,
 whichever their own lineage ships. This repository therefore carries **both**, so our results can
 be read on either.
 
-**Short answer.** The paper's Table 1 numbers are on the **LM-EEC protocol**, which is this
-codebase's own lineage. Under the **O-MaMa protocol** the same predictions score about 1.2 IoU
-lower. Neither is wrong; they are different conventions, and the difference is small next to the
-~18–26 IoU gap between methods in Table 1.
+**Short answer.** The paper states that it uses the metrics "provided in" the Ego-Exo4D
+benchmark, i.e. the official protocol, and does not single out a driver. That is unambiguous for
+our own rows because our predictions cover the test split: full coverage and the
+prediction-driven variant this codebase inherits agree to **0.21 IoU** (70.48 vs 70.69 on
+Exo→Ego), so the paper's numbers are the same either way. Under the **O-MaMa protocol** the same
+predictions score about 1.2 IoU lower. Neither is wrong; they are different conventions, and the
+difference is small next to the ~18–26 IoU gap between methods in Table 1 — but it is larger than
+many of the margins people quote, so it has to be stated.
 
 ---
 
@@ -103,7 +107,7 @@ robust to it. **IoU is the only one of the metrics sensitive to which protocol y
 Scoring at the GT's native resolution instead — upsampling the prediction to 1408² so O-MaMa's
 driver has nothing to downscale — recovers about half the gap, at **73.48**.
 
-### Full test split, LM-EEC protocol
+### Full test split
 
 | Direction | IoU | Paper Table 1 |
 |---|---|---|
@@ -150,8 +154,10 @@ figures reported in their own papers. See [`RESULTS.md`](RESULTS.md) for the ful
 * **O-MaMa's published 44.10 / 0.524 / 0.082 (Exo→Ego) is on the O-MaMa protocol.** Scoring its
   released predictions with its own driver gives 44.31 / 0.5150 / 0.0821 — Loc.E identical, IoU
   within 0.21. The same predictions score **42.81** under a full-coverage 480² pass.
-* **Our Table 1 numbers are on the LM-EEC protocol**, which is what this codebase ships and what
-  `compute_metrics.py` implements.
+* **Our Table 1 numbers follow the official Ego-Exo4D metrics**, which is what the paper states.
+  Because our predictions cover the test split, the prediction-driven scorer this codebase
+  inherits from LM-EEC gives the same answer to within 0.21 IoU, so the distinction does not
+  change our row.
 
 So Table 1 compares a TeSCo row on one protocol against an O-MaMa row on another. The difference
 is ~1.3 IoU and does not affect the ordering, but it is real and is recorded here rather than
@@ -160,7 +166,7 @@ left for a reader to discover.
 ## Running both
 
 ```bash
-# LM-EEC protocol (what the paper reports)
+# LM-EEC protocol (this codebase's inherited scorer)
 python evaluation/compute_metrics.py \
     --gt-file   data/gt_results/exoego_test_gt.json \
     --pred-file outputs/<run>/merged.json --task-key exo-ego
