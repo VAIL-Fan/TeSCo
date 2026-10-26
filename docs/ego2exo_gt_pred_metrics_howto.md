@@ -88,13 +88,17 @@ If any step is missing, that GT row has **no prediction** for that run (count as
 
 Native GT and pred can differ in **height × width**. For comparable IoU and for boundary metrics, **resize both** to a common size with **nearest neighbor** (preserves {0,1} masks):
 
-- Example: **1024 × 1024** (used in the V2-SAM–style and full-dataset reports in this project).
+- **Use 480 × 480.** This is the benchmark grid, not a free choice: every RLE in both
+  correspondence test GT files is `size: [480, 480]` (check with `tools/check_gt.py`),
+  `utils.reshape_img_nopad` defaults to `max_dim=480`, and `utils.location_score` defaults to
+  `size=(480, 480)`. Scoring at any other size makes the result incomparable to published
+  numbers. `evaluation/unified_eval.py` does this resize for you.
 
 Pseudocode:
 
 ```text
-G = resize_binary(gt_rle_decoded, (1024, 1024), NEAREST)
-P = resize_binary(pred_png,     (1024, 1024), NEAREST)
+G = resize_binary(gt_rle_decoded, (480, 480), NEAREST)   # already 480x480: a no-op
+P = resize_binary(pred_png,       (480, 480), NEAREST)
 ```
 
 Then compute all four per-sample metrics on `G` and `P` of the same shape.
@@ -138,7 +142,7 @@ These definitions match **this project**’s `evaluation/utils.py` + `evaluation
 - Uses centroids from `metrics.crop_mask` / `compute_size_boundry_centroid`, then:
   - `d = euclidean(centroid_gt, centroid_pred)`
   - `LocationScore = d / sqrt(H^2 + W^2)` with `H, W` from the `size=` argument.
-- If you evaluated at **1024×1024**, pass `size=(1024, 1024)`.
+- Pass `size=(480, 480)`, matching the evaluation grid in section 4.
 
 **Lower is better** (0 = same centroid).
 
@@ -169,7 +173,7 @@ For each top-level entry in `ego2exo_test.json`:
    - `name = prompt["first_frame_anns"][str(object_id)]["text"]`
    - `gt_rle = objects[str(object_id)]["segmentation"]`
 3. Load prediction at `pred_root / take / cam_pair / name / {frame_id}.png` (try both cam_pair orders).
-4. Decode `gt_rle` and pred to binary; resize both to e.g. 1024×1024.
+4. Decode `gt_rle` and pred to binary; resize both to 480×480 (nearest).
 5. Compute: IoU, `eval_mask` (IoU + Shape), `existence_accuracy`, `location_score` (with matching `size=`).
 6. Aggregate means over all valid pairs.
 

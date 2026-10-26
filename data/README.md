@@ -1,6 +1,30 @@
 # data/
 
-This directory is where you place (or symlink) the Ego-Exo4D and HANDAL-X datasets locally.
-It's intentionally empty in this repo (see the root `README.md` → "Datasets" section for
-where to get them and the exact layout expected here). `.gitignore` excludes everything in
-this folder except this file, so your local dataset paths never get committed.
+Where the Ego-Exo4D and HANDAL-X datasets go. The image/video data is not in this repo (large
+and third-party-licensed); see the root `README.md` → "Datasets" for where to obtain it and the
+exact layout expected here.
+
+What this directory does carry:
+
+```
+data/
+├── EgoExo4D -> ...            # symlink to the image splits (train/val/data_segswap_test)
+├── handal_lmeec -> ...        # symlink to HANDAL-X
+├── handal_lmeec_i100 -> ...   # symlink to the HANDAL-X i100 variant
+└── gt_results/
+    ├── egoexo_test_gt.json    # Ego->Exo ground truth, task key "ego-exo"
+    └── exoego_test_gt.json    # Exo->Ego ground truth, task key "exo-ego"
+```
+
+`gt_results/` is what `evaluation/unified_eval.py` scores against, so these two files are
+required even if you only evaluate. Both are 291 takes at 480x480; check a file reproduces the
+documented row counts before trusting a score:
+
+```bash
+python tools/check_gt.py data/gt_results/egoexo_test_gt.json ego-exo
+python tools/check_gt.py data/gt_results/exoego_test_gt.json exo-ego
+```
+
+Note that the symlinks above point outside this folder, so a copy of the folder alone will not
+resolve them — repoint them at your own dataset location. `.gitignore` excludes everything here
+except this file, so local dataset paths never get committed.

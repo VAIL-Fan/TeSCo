@@ -561,6 +561,18 @@ def main():
         help="Per-take caption folder (default: dam_frame_captions_v2_exo if --exo_to_ego else dam_frame_captions_v2).",
     )
     parser.add_argument(
+        "--restrict_frames_json",
+        type=str,
+        default=None,
+        help="Optional JSON {take: {object: {cam_pair: [frame, ...]}}}. The frame list for "
+             "each (take, object, camera pair) is intersected with it, so the model both "
+             "SEES and predicts only those frames. Use it to match another method's frame "
+             "sampling: this repo predicts on every frame where the object is annotated in "
+             "the source view (often stride 30), which gives a memory-based tracker denser "
+             "temporal context than a per-frame method evaluated at, say, stride 120. "
+             "Default (unset) leaves the frame list untouched.",
+    )
+    parser.add_argument(
         "--gpu_id",
         type=int,
         default=0,
@@ -579,6 +591,15 @@ def main():
         torch.backends.cudnn.benchmark = True
         torch.backends.cuda.matmul.allow_tf32 = True
         torch.backends.cudnn.allow_tf32 = True
+
+    restrict = None
+    if args.restrict_frames_json:
+        with open(args.restrict_frames_json) as fp:
+            restrict = json.load(fp)
+        n_rows = sum(len(fl) for t in restrict.values()
+                     for o in t.values() for fl in o.values())
+        print(f"restricting frames to {args.restrict_frames_json}: "
+              f"{len(restrict)} takes, {n_rows} rows")
 
     cap_sub = args.caption_subdir
     if cap_sub is None:
@@ -670,6 +691,17 @@ def main():
 
                         frames = np.intersect1d(ego_frames, exo_frames)
                         frames = natsorted(frames)
+
+                    if restrict is not None:
+                        pair = (f"{cam_name}_{ego_cam_name}" if (args.swap or args.exo_to_ego)
+                                else f"{ego_cam_name}_{cam_name}")
+                        allowed = set(
+                            str(x) for x in
+                            restrict.get(video_name, {}).get(object_name, {}).get(pair, [])
+                        )
+                        before = len(frames)
+                        frames = [f for f in frames if str(f) in allowed]
+                        print(f"  restrict {object_name}/{pair}: {before} -> {len(frames)} frames")
 
                     if len(frames) == 0:
                         print(f"  Skipping {object_name}/{cam_name}: no overlapping frames found")
