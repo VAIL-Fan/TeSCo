@@ -156,10 +156,14 @@ ourselves:
 * **O-MaMa's published 44.10 / 0.524 / 0.082 (Exo→Ego) is on the O-MaMa protocol.** Scoring its
   released predictions with its own driver gives 44.31 / 0.5150 / 0.0821 — Loc.E identical, IoU
   within 0.21. The same predictions score **42.81** under a full-coverage 480² pass.
-* **Our Table 1 numbers follow the official Ego-Exo4D metrics**, which is what the paper states.
-  Because our predictions cover the test split, the prediction-driven scorer this codebase
-  inherits from LM-EEC gives the same answer to within 0.21 IoU, so the distinction does not
-  change our row.
+* **Our Table 1 numbers are on the V²-SAM convention**, which is what the paper states it
+  follows ("Following [V²-SAM], we use IoU, Loc.E and Cont.A provided in [Ego-Exo4D]"), and which
+  the rest of the table is quoted through. It makes little practical difference for our rows:
+  V²-SAM's own metric, the official scorer and LM-EEC's agree to 0.04 IoU on identical
+  predictions, because this model predicts at the ground truth's own 480×480 and almost no row
+  has an empty target. Run `evaluation/v2sam_eval.py` to reproduce it.
+  Note that V²-SAM ships no contour or location metric, so Cont.A and Loc.E necessarily come from
+  the official Ego-Exo4D implementations — which is what "provided in [Ego-Exo4D]" means.
 
 So Table 1 compares a TeSCo row on one protocol against an O-MaMa row on another. The difference
 is ~1.3 IoU and does not affect the ordering, but it is real and is recorded here rather than

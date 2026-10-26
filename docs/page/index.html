@@ -213,9 +213,10 @@ python tools/correspondence_inference.py \
 python evaluation/unified_eval.py --gt data/gt_results/egoexo_test_gt.json \
   --pred output/ego2exo.json --task ego-exo --coverage both</code></pre>
     <div class="note">Published numbers on this benchmark come from more than one scorer, and they
-      differ by over an IoU point on identical predictions. The repository ships all three and
-      documents what separates them, so a comparison against these results can be made on whichever
-      one you report.</div>
+      differ by over an IoU point on identical predictions. Ours follow the <strong>V²-SAM</strong>
+      convention, as the paper states. The repository ships that scorer and three others — the
+      official benchmark's, LM-EEC's and O-MaMa's — so a comparison against these results can be
+      made on whichever one you report.</div>
   </div>
 </section>
 

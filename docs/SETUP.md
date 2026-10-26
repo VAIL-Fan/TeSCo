@@ -25,13 +25,17 @@ TeSCo/
 │   │   ├── tesco_egoexo4d_epoch59_for_inference.pt     # <- included: use this for inference
 │   │   ├── tesco_egoexo4d_epoch79.pth                 # <- included: raw, for training resume
 │   │   └── tesco_egoexo4d_epoch79_for_inference.pt     # <- included: use this for inference
-├── evaluation/                  # three scorers, deliberately kept side by side:
+├── evaluation/                  # four scorers, deliberately kept side by side:
+│                                 #   v2sam_eval.py       - the V2-SAM protocol, which this
+│                                 #     paper follows; flat inter/(union+1e-6), no resize,
+│                                 #     keeps empty-GT rows. IoU and Dice only
+│                                 #   unified_eval.py     - the official benchmark protocol;
+│                                 #     GT-driven, full coverage, both sides at 480x480.
+│                                 #     The source of our Cont.A and Loc.E
 │                                 #   compute_metrics.py  - the LM-EEC protocol (this repo's
 │                                 #     lineage); prediction-driven, skips unpredicted rows
 │                                 #   omama_eval.py       - the O-MaMa protocol; GT-driven,
 │                                 #     annotated_frames filter, GT resized to the prediction
-│                                 #   unified_eval.py     - the official benchmark protocol;
-│                                 #     GT-driven, full coverage, both sides at 480x480
 │                                 #   plus compute_metrics_scenarios.py and
 │                                 #   merge_pred.py / merge_results.py (assemble predictions)
 ├── tools/                       # correspondence_inference.py (run the model on a video split),
