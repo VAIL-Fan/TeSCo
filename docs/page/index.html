@@ -34,7 +34,10 @@ h1{font-size:clamp(1.9rem,4.4vw,2.9rem);line-height:1.2;margin:0 0 10px;letter-s
 .venue{display:inline-block;font-size:.82rem;letter-spacing:.09em;text-transform:uppercase;
   color:var(--accent);background:var(--accent-soft);padding:5px 13px;border-radius:999px;margin-bottom:20px}
 .lede{max-width:660px;margin:18px auto 0;color:var(--muted);font-size:1.07rem}
-.links{margin-top:26px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.repo{margin:14px 0 0;font-family:var(--mono);font-size:.9rem}
+.repo a{text-decoration:none;border-bottom:1px solid var(--line)}
+.repo a:hover{border-color:var(--accent)}
+.links{margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .btn{display:inline-block;padding:9px 18px;border:1px solid var(--line);border-radius:8px;
   text-decoration:none;color:var(--fg);font-size:.93rem;background:var(--card);transition:.15s}
 .btn:hover{border-color:var(--accent);color:var(--accent)}
@@ -87,8 +90,9 @@ footer{padding:40px 0 64px;color:var(--muted);font-size:.88rem;text-align:center
     <p class="lede">Mark an object in one camera's video. TeSCo describes it in words, then uses
       that description to find the same object in another camera's view of the scene — which
       holds up under the viewpoint and appearance changes that defeat purely visual matching.</p>
+    <p class="repo"><a href="https://github.com/fb-reps/TeSCo">github.com/fb-reps/TeSCo</a></p>
     <div class="links">
-      <a class="btn primary" href="https://github.com/fb-reps/TeSCo">Code</a>
+      <a class="btn primary" href="https://github.com/fb-reps/TeSCo">Code &amp; models</a>
       <a class="btn" href="#results">Results</a>
       <a class="btn" href="#clips">Video results</a>
       <a class="btn" href="#method">Method</a>
