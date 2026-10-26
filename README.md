@@ -28,13 +28,16 @@ Ego-Exo4D correspondence test split:
 
 Text is worth **9.85 mIoU** over the same model without it.
 
-> **Comparing against us?** Published numbers on this benchmark come from more than one scorer,
-> and they differ by over an IoU point on identical predictions. The paper follows the official
-> Ego-Exo4D metrics; our predictions cover the test split, so the prediction-driven variant this
-> codebase also ships agrees to 0.21 IoU (70.69 vs 70.48 on Exo→Ego). Other rows in the table are
-> not all on that protocol — O-MaMa's published figure is on its own scorer.
-> [`docs/METRIC_SETTINGS.md`](docs/METRIC_SETTINGS.md) gives our results under each and says
-> exactly what differs.
+> **Every row above is on one convention — the one V²-SAM's table established.** We traced each
+> comparison row to its source paper and all nine locatable ones match digit for digit; seven come
+> from V²-SAM's Table 1, which itself quotes five from O-MaMa's.
+> [`docs/RESULTS.md`](docs/RESULTS.md) has the trace.
+>
+> Scored with V²-SAM's own released metric, our Exo→Ego predictions give **74.14** against
+> **74.18** under the official benchmark scorer — the two agree to 0.04. O-MaMa's scorer is the
+> outlier at **72.92**, because it resizes the 1408² ground truth onto the prediction rather than
+> putting both on the benchmark's 480×480 grid. That 1.3-point difference is inherited through the
+> citation chain, not introduced here.
 
 ## What the text actually is
 
@@ -114,9 +117,14 @@ Published results on this benchmark are not all on the same protocol, so all thr
 | `evaluation/omama_eval.py` | **O-MaMa** | walks the GT, filters by `annotated_frames`, resizes the GT onto your prediction's grid |
 | `evaluation/unified_eval.py` | **official benchmark** — use this to compare methods | walks the GT, scores a missing prediction as 0, puts both sides on a 480×480 grid |
 
-On identical predictions our Exo→Ego scores **74.16** under LM-EEC's and **72.92** under
-O-MaMa's. Only IoU moves; contour accuracy and location error agree to three decimals.
-[`docs/METRIC_SETTINGS.md`](docs/METRIC_SETTINGS.md) has the measurements and the cause.
+On identical predictions our Exo→Ego scores **74.18** under LM-EEC's, **74.18** under the
+official scorer, **74.14** under V²-SAM's released metric, and **72.92** under O-MaMa's. Only IoU
+moves; contour accuracy and location error agree to three decimals.
+[`docs/RESULTS.md`](docs/RESULTS.md) §3 has all five measurements and the cause of the one gap.
+
+V²-SAM's released code ships only a flat `inter/(union+1e-6)` IoU and Dice — it contains no
+contour or location metric, so the Cont.A and Loc.E columns of its own table came from code that
+was not released.
 
 ## What is and isn't reproducible here
 

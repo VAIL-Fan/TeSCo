@@ -148,8 +148,10 @@ stated rather than assumed.
 
 ## Which protocol produced which published number
 
-We re-measured two rows of Table 1 and can state their protocol with evidence; the rest are the
-figures reported in their own papers. See [`RESULTS.md`](RESULTS.md) for the full provenance.
+Every comparison row was traced to its source paper, and nine of the ten locatable ones match
+digit for digit — seven of them come from V²-SAM's Table 1, which itself quotes five from
+O-MaMa's. See [`RESULTS.md`](RESULTS.md) for the row-by-row trace. Two rows we also re-measured
+ourselves:
 
 * **O-MaMa's published 44.10 / 0.524 / 0.082 (Exo→Ego) is on the O-MaMa protocol.** Scoring its
   released predictions with its own driver gives 44.31 / 0.5150 / 0.0821 — Loc.E identical, IoU
