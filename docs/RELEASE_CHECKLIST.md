@@ -25,7 +25,7 @@ Measured on the working tree:
 
 | | |
 |---|---|
-| tracked files (before the cleanup below) | **629,025**, of which `text_labels/HANDAL-X` is 618,880 |
+| tracked files (before the cleanup below) | **629,025**, nearly all of them generated captions |
 | `.git/objects` — the actual history | **52 MB** |
 | `.git/lfs` — the weight cache | **5.6 GB** |
 | configured remote | `origin git@github.com:fb-reps/TeSCo.git` — already set |
@@ -50,7 +50,7 @@ now does:
 | `text_labels/` | 2.9 GB, 638,884 files; regenerable with `tools/precompute_dam_frame_captions.py` |
 | `checkpoint/` | Meta's unmodified SAM 2.1 release — better fetched from its own source |
 | `training/checkpoints_EgoExo/` | 787 MB each; host on a model hub and link from the README |
-| `data/` | Ego-Exo4D and HANDAL-X carry their own licences and are not ours to redistribute |
+| `data/` | Ego-Exo4D carries its own licence and is not ours to redistribute |
 | `outputs/`, `sam2_logs/`, `work_dirs/`, `*.log` | run intermediates |
 
 That leaves **138 tracked files** — the code, configs and docs — which is what a reader actually

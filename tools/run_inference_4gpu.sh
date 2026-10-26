@@ -8,7 +8,7 @@ DATASET="${EEO_DATA_ROOT:-$PROJ/data/EgoExo4D}/test"
 # Default checkpoint: epoch-59 (0-indexed => 60 epochs), matching the paper's stated training
 # length and the checkpoint that reproduces this repo's Table 9 TeSCo/Exo->Ego numbers.
 # Override with CKPT=$PROJ/training/checkpoints_EgoExo/tesco_egoexo4d_epoch79.pth for the
-# checkpoint that reproduces the Table 2(a) HANDAL-X zero-shot number instead.
+# the other released checkpoint instead.
 CKPT="${CKPT:-$PROJ/training/checkpoints_EgoExo/tesco_egoexo4d_epoch59.pth}"
 SAM2_CFG=configs/sam2.1/sam2.1_hiera_b+_egoexo_text.yaml
 OUTPUT="${OUTPUT:-$PROJ/output/egoexo_test}"

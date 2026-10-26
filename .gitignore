@@ -5,7 +5,7 @@
 # instead, and README.md "Datasets" for how to obtain or regenerate each one.
 
 # --- Datasets and ground truth -------------------------------------------
-# Ego-Exo4D and HANDAL-X require accepting their own licences; data/ holds only
+# Ego-Exo4D requires accepting its own licence; data/ holds only
 # local symlinks and the GT exports, neither of which we redistribute.
 data/*
 !data/README.md
@@ -18,7 +18,6 @@ data/*
 *.ckpt
 checkpoint/
 training/checkpoints_EgoExo/
-training/checkpoints_Handal/
 
 # --- Generated text labels ------------------------------------------------
 # 2.9 GB and 638,884 files of DAM-3B captions, regenerable with

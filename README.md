@@ -78,8 +78,8 @@ conda env create -f environment.yml && conda activate tesco
 pip install -e .
 ```
 
-Obtain Ego-Exo4D (and HANDAL-X, if you want the generalisation experiment) and place them under
-`data/` — [`docs/SETUP.md`](docs/SETUP.md) gives the exact layout. Then:
+Obtain Ego-Exo4D and place it under `data/` — [`docs/SETUP.md`](docs/SETUP.md) gives the exact
+layout. Then:
 
 ```bash
 # 1. predict  (Ego->Exo; add --exo_to_ego for the other direction)
@@ -102,7 +102,7 @@ python evaluation/unified_eval.py --gt data/gt_results/egoexo_test_gt.json \
   --pred output/ego2exo.json --task ego-exo --coverage both
 ```
 
-Training, HANDAL-X, and every flag: [`docs/SETUP.md`](docs/SETUP.md).
+Training and every flag: [`docs/SETUP.md`](docs/SETUP.md).
 
 ## Three scorers, and why
 
@@ -149,10 +149,8 @@ Verification helpers, each of which reproduces a figure quoted in the docs:
 
 ## Known limitations
 
-- No checkpoint is included for a HANDAL-X-retrained model, or for a text-ablated baseline. The
-  code handles `text_feat is None` by skipping ITFR/TCF, but that path is not validated as an
-  ablation baseline.
-- HANDAL-X has not been run end to end against the real dataset.
+- No checkpoint is included for a text-ablated baseline. The code handles `text_feat is None`
+  by skipping ITFR/TCF, but that path is not validated as an ablation baseline.
 - This repository consolidates an iterative research codebase into one tree — treat it as a
   reference implementation and spot-check before building on it.
 
