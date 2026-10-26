@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TeSCo</title>
+<meta name="description" content="Exploiting Textual Semantics for Robust Cross-View Object Correspondence, NeurIPS 2026">
+<style>
+:root{
+  --bg:#ffffff; --fg:#17191c; --muted:#5b6168; --line:#e4e7ea;
+  --card:#f7f8f9; --accent:#0b7f8c; --accent-soft:#e6f4f5;
+  --pred:#1ea7c4; --src:#2faa5c; --gt:#d98324;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#101316; --fg:#e8eaed; --muted:#9aa2aa; --line:#272c31;
+  --card:#171b1f; --accent:#4fd1c5; --accent-soft:#17302f;
+  --pred:#4fd1e8; --src:#52d98a; --gt:#f0a84a;
+}}
+:root[data-theme="dark"]{
+  --bg:#101316; --fg:#e8eaed; --muted:#9aa2aa; --line:#272c31;
+  --card:#171b1f; --accent:#4fd1c5; --accent-soft:#17302f;
+  --pred:#4fd1e8; --src:#52d98a; --gt:#f0a84a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);
+  line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+a{color:var(--accent)}
+header{padding:64px 0 40px;text-align:center;border-bottom:1px solid var(--line)}
+h1{font-size:clamp(1.9rem,4.4vw,2.9rem);line-height:1.2;margin:0 0 10px;letter-spacing:-.02em}
+.venue{display:inline-block;font-size:.82rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--accent);background:var(--accent-soft);padding:5px 13px;border-radius:999px;margin-bottom:20px}
+.lede{max-width:660px;margin:18px auto 0;color:var(--muted);font-size:1.07rem}
+.links{margin-top:26px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;padding:9px 18px;border:1px solid var(--line);border-radius:8px;
+  text-decoration:none;color:var(--fg);font-size:.93rem;background:var(--card);transition:.15s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.primary:hover{opacity:.9;color:#fff}
+section{padding:56px 0;border-bottom:1px solid var(--line)}
+h2{font-size:1.5rem;margin:0 0 6px;letter-spacing:-.01em}
+h2 + .sub{color:var(--muted);margin:0 0 26px;font-size:.98rem}
+figure{margin:0 0 10px}
+figure img{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:10px;background:#fff}
+figcaption{color:var(--muted);font-size:.88rem;margin-top:10px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:720px){.grid2{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:.93rem;font-variant-numeric:tabular-nums}
+th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:right}
+th:first-child,td:first-child{text-align:left}
+thead th{color:var(--muted);font-weight:600;font-size:.82rem;text-transform:uppercase;letter-spacing:.05em}
+tr.ours{background:var(--accent-soft);font-weight:650}
+tr.ours td{border-bottom-color:var(--accent)}
+.legend{display:flex;gap:20px;flex-wrap:wrap;margin:0 0 18px;font-size:.9rem;color:var(--muted)}
+.key{display:inline-flex;align-items:center;gap:7px}
+.sw{width:13px;height:13px;border-radius:3px;display:inline-block}
+.tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.tab{padding:7px 15px;border:1px solid var(--line);background:var(--card);border-radius:7px;
+  cursor:pointer;font-size:.9rem;color:var(--fg);font-family:inherit}
+.tab[aria-selected="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.clips{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:18px}
+@media(max-width:720px){.clips{grid-template-columns:1fr}}
+.clip{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card)}
+.clip video{width:100%;display:block;background:#000}
+.clip .name{padding:8px 12px;font-size:.84rem;color:var(--muted);font-family:var(--mono);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+pre{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:15px;
+  overflow:auto;font-family:var(--mono);font-size:.84rem;line-height:1.5}
+code{font-family:var(--mono);font-size:.9em}
+.note{background:var(--card);border-left:3px solid var(--accent);padding:13px 17px;
+  border-radius:0 8px 8px 0;color:var(--muted);font-size:.93rem;margin:20px 0}
+footer{padding:40px 0 64px;color:var(--muted);font-size:.88rem;text-align:center}
+.theme{position:fixed;top:14px;right:14px;z-index:10;width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--line);background:var(--card);color:var(--fg);cursor:pointer;font-size:1rem}
+</style>
+</head>
+<body>
+<button class="theme" id="theme" aria-label="Toggle theme">◐</button>
+
+<header>
+  <div class="wrap">
+    <div class="venue">NeurIPS 2026</div>
+    <h1>Exploiting Textual Semantics for<br>Robust Cross-View Object Correspondence</h1>
+    <p class="lede">Mark an object in one camera's video. TeSCo describes it in words, then uses
+      that description to find the same object in another camera's view of the scene — which
+      holds up under the viewpoint and appearance changes that defeat purely visual matching.</p>
+    <div class="links">
+      <a class="btn primary" href="https://github.com/fb-reps/TeSCo">Code</a>
+      <a class="btn" href="#results">Results</a>
+      <a class="btn" href="#clips">Video results</a>
+      <a class="btn" href="#method">Method</a>
+    </div>
+  </div>
+</header>
+
+<section id="teaser">
+  <div class="wrap">
+    <figure>
+      <img src="assets/framework.png" alt="TeSCo architecture">
+      <figcaption>A vision–language model captions the marked object in the query view.
+        <strong>ITFR</strong> refines that text against the search view; <strong>TCF</strong> fuses
+        the refined text into the visual features the mask decoder sees. Everything else is SAM&nbsp;2.1.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="results">
+  <div class="wrap">
+    <h2>Results</h2>
+    <p class="sub">Ego-Exo4D correspondence test split. IoU, higher is better.</p>
+    <table>
+      <thead><tr><th>Method</th><th>Ego→Exo</th><th>Exo→Ego</th><th>mIoU</th></tr></thead>
+      <tbody>
+        <tr><td>XSegTx <span style="color:var(--muted)">[CVPR'24]</span></td><td>18.90</td><td>27.10</td><td>23.00</td></tr>
+        <tr><td>ObjectRelator <span style="color:var(--muted)">[ICCV'25]</span></td><td>35.30</td><td>40.30</td><td>37.80</td></tr>
+        <tr><td>PCC <span style="color:var(--muted)">[CVPR'25]</span></td><td>39.01</td><td>47.06</td><td>43.04</td></tr>
+        <tr><td>O-MaMa <span style="color:var(--muted)">[ICCV'25]</span></td><td>42.60</td><td>44.10</td><td>43.35</td></tr>
+        <tr><td>CCMP <span style="color:var(--muted)">[CVPR'26]</span></td><td>41.95</td><td>47.18</td><td>44.57</td></tr>
+        <tr><td>V²-SAM <span style="color:var(--muted)">[CVPR'26]</span></td><td>46.30</td><td>49.60</td><td>47.95</td></tr>
+        <tr><td>LM-EEC <span style="color:var(--muted)">[NeurIPS'25]</span></td><td>54.98</td><td>65.77</td><td>60.38</td></tr>
+        <tr><td>Baseline <span style="color:var(--muted)">(ours, no text)</span></td><td>52.70</td><td>58.30</td><td>55.50</td></tr>
+        <tr class="ours"><td>TeSCo</td><td>60.40</td><td>70.30</td><td>65.35</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><strong>Text is worth 9.85 mIoU.</strong> The baseline is the same model with
+      ITFR and TCF removed, so the gap is the contribution of textual semantics alone — not of a
+      larger backbone or more data.</div>
+  </div>
+</section>
+
+<section id="clips">
+  <div class="wrap">
+    <h2>Video results</h2>
+    <p class="sub">Each clip shows exactly what the model is given and what it returns. The sentence
+      under each pair is the description the model was conditioned on for that frame.</p>
+    <div class="legend">
+      <span class="key"><span class="sw" style="background:var(--src)"></span>object given in the query view</span>
+      <span class="key"><span class="sw" style="background:var(--pred)"></span>TeSCo prediction</span>
+      <span class="key"><span class="sw" style="background:var(--gt)"></span>ground truth</span>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" data-dir="exo2ego" aria-selected="true">Exo → Ego</button>
+      <button class="tab" role="tab" data-dir="ego2exo" aria-selected="false">Ego → Exo</button>
+    </div>
+    <div class="clips" id="clips-grid"></div>
+    <p class="sub" id="clips-empty" style="display:none">No clips bundled for this direction yet.</p>
+  </div>
+</section>
+
+<section id="method">
+  <div class="wrap">
+    <h2>Why text helps</h2>
+    <p class="sub">Attention in the search view, with textual semantics and without.</p>
+    <figure>
+      <img src="assets/att_map.png" alt="Attention maps with and without text">
+      <figcaption>With text (c), attention concentrates on the target. Without it (d), it spreads
+        across visually similar regions — which is where purely visual matching fails.</figcaption>
+    </figure>
+
+    <h2 style="margin-top:48px">What the text actually is</h2>
+    <p class="sub">Generated per frame, describing attributes that survive a change of viewpoint.</p>
+    <figure>
+      <img src="assets/gen_text.png" alt="Examples of generated descriptions">
+      <figcaption>Category, colour, texture and material hold across views in a way raw pixels do
+        not. Refreshing the description every frame scores 60.40; every 5 frames, 59.10; every 10,
+        59.00.</figcaption>
+    </figure>
+
+    <h2 style="margin-top:48px">The two modules</h2>
+    <div class="grid2" style="margin-top:22px">
+      <figure><img src="assets/ITF.png" alt="ITFR module">
+        <figcaption><strong>ITFR</strong> — not every word applies to the current search-view frame,
+          so the text feature is refined against it for K=2 iterations before fusion.</figcaption></figure>
+      <figure><img src="assets/TCF.png" alt="TCF module">
+        <figcaption><strong>TCF</strong> — injects the refined text into the visual features by
+          text-guided modulation, producing the multimodal representation the decoder consumes.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="qualitative">
+  <div class="wrap">
+    <h2>Qualitative comparison</h2>
+    <p class="sub">Left to right: query view, baseline, TeSCo, search view with ground truth.</p>
+    <div class="grid2">
+      <figure><img src="assets/egoexo.png" alt="Ego to Exo qualitative results"><figcaption>Ego → Exo</figcaption></figure>
+      <figure><img src="assets/exoego.png" alt="Exo to Ego qualitative results"><figcaption>Exo → Ego</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="code">
+  <div class="wrap">
+    <h2>Run it</h2>
+    <p class="sub">Predict, assemble, score. Full instructions in the repository.</p>
+<pre><code>git clone https://github.com/fb-reps/TeSCo &amp;&amp; cd TeSCo
+conda env create -f environment.yml &amp;&amp; conda activate tesco &amp;&amp; pip install -e .
+
+python tools/correspondence_inference.py \
+  --sam2_cfg sam2.1/sam2.1_hiera_b+_egoexo_text.yaml \
+  --sam2_checkpoint training/checkpoints_EgoExo/tesco_egoexo4d_epoch59_for_inference.pt \
+  --base_video_dir data/EgoExo4D/data_segswap_test \
+  --input_mask_dir data/EgoExo4D/data_segswap_test \
+  --output_mask_dir output/ego2exo --caption_subdir dam_frame_captions_v2
+
+python evaluation/unified_eval.py --gt data/gt_results/egoexo_test_gt.json \
+  --pred output/ego2exo.json --task ego-exo --coverage both</code></pre>
+    <div class="note">Published numbers on this benchmark come from more than one scorer, and they
+      differ by over an IoU point on identical predictions. The repository ships all three and
+      documents what separates them, so a comparison against these results can be made on whichever
+      one you report.</div>
+  </div>
+</section>
+
+<section id="cite">
+  <div class="wrap">
+    <h2>Citation</h2>
+<pre><code>@inproceedings{tesco2026,
+  title     = {Exploiting Textual Semantics for Robust Cross-View Object Correspondence},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2026}
+}</code></pre>
+  </div>
+</section>
+
+<footer><div class="wrap">Built on SAM&nbsp;2.1. Evaluated on Ego-Exo4D.</div></footer>
+
+<script>
+const t=document.getElementById('theme');
+t.onclick=()=>{const d=document.documentElement;
+  const cur=d.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  d.setAttribute('data-theme',cur==='dark'?'light':'dark');};
+
+let manifest={};
+const grid=document.getElementById('clips-grid');
+const empty=document.getElementById('clips-empty');
+function show(dir){
+  const list=manifest[dir]||[];
+  grid.innerHTML='';
+  empty.style.display=list.length?'none':'block';
+  for(const c of list){
+    const d=document.createElement('div'); d.className='clip';
+    d.innerHTML=`<video src="clips/${dir}/${c.file}" muted loop playsinline preload="metadata"
+      onmouseenter="this.play()" onmouseleave="this.pause()" controls></video>
+      <div class="name">${c.label}</div>`;
+    grid.appendChild(d);
+  }
+}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected','false'));
+  b.setAttribute('aria-selected','true'); show(b.dataset.dir);});
+fetch('clips/manifest.json').then(r=>r.json()).then(m=>{manifest=m;show('exo2ego');})
+  .catch(()=>{empty.style.display='block';empty.textContent='Clips not bundled in this copy.';});
+</script>
+</body>
+</html>
