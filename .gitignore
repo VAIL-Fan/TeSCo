@@ -1,10 +1,51 @@
-# Local, machine-specific dataset symlinks -- see README.md "Datasets" for how to
-# obtain and place these yourself; do not commit the actual video/image data.
+# This repository tracks source only. Datasets, model weights, generated text
+# labels and run outputs stay on disk but out of git: they are large, several
+# are third-party-licensed and not ours to redistribute, and GitHub rejects any
+# single file over 100 MB. See docs/RELEASE_CHECKLIST.md for where they belong
+# instead, and README.md "Datasets" for how to obtain or regenerate each one.
+
+# --- Datasets and ground truth -------------------------------------------
+# Ego-Exo4D and HANDAL-X require accepting their own licences; data/ holds only
+# local symlinks and the GT exports, neither of which we redistribute.
 data/*
 !data/README.md
 
+# --- Model weights --------------------------------------------------------
+# 787 MB each, plus Meta's unmodified SAM 2.1 release, which is better fetched
+# from its own source than mirrored here.
+*.pt
+*.pth
+*.ckpt
+checkpoint/
+training/checkpoints_EgoExo/
+training/checkpoints_Handal/
+
+# --- Generated text labels ------------------------------------------------
+# 2.9 GB and 638,884 files of DAM-3B captions, regenerable with
+# tools/precompute_dam_frame_captions.py.
+text_labels/
+
+# --- Run outputs and intermediates ---------------------------------------
+outputs/
+output/
+sam2_logs/
+work_dirs/
+probe_out/
+proto_out/
+*.log
+
+# --- Python ---------------------------------------------------------------
 __pycache__/
 *.pyc
-output/
 *.egg-info/
+.ipynb_checkpoints/
 *.lock
+
+# --- OS / editor ----------------------------------------------------------
+.DS_Store
+
+# --- Scratch -------------------------------------------------------------
+# Debug inputs and temporary ablation configs; `_ablation_pooling.yaml` says so
+# in its own header ("Not part of the release").
+tools/single_take.txt
+sam2/configs/**/_*.yaml
