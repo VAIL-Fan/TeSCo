@@ -114,20 +114,10 @@ Training and every flag: [`docs/SETUP.md`](docs/SETUP.md).
 
 ```bibtex
 @inproceedings{tesco2026,
+  author  = {Fan, Bing and Feng, Yunhe and Huang, Yan
+             and Fan, Heng},
   title     = {Exploiting Textual Semantics for Robust Cross-View Object Correspondence},
-  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  booktitle = {Advances in Neural Information Processing Systems},
   year      = {2026}
-}
-```
-
-Please also cite the correspondence backbone this builds on, and SAM 2:
-
-```bibtex
-@article{hu2025robust,
-  title   = {Robust Ego-Exo Correspondence with Long-Term Memory},
-  author  = {Hu, Yijun and Fan, Bing and Gu, Xin and Ren, Haiqing and Liu, Dongfang
-             and Fan, Heng and Zhang, Libo},
-  journal = {arXiv preprint arXiv:2510.11417},
-  year    = {2025}
 }
 ```
