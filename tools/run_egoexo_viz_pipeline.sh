@@ -15,7 +15,7 @@ REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 cd "${REPO_ROOT}"
 export PYTHONPATH="${PYTHONPATH:+${PYTHONPATH}:}${REPO_ROOT}"
 
-EEO_DATA_ROOT="${EEO_DATA_ROOT:-/home/UNT/bf0191/Documents/MLLM_EgoExo_Proposal/LM-EEC/data/EgoExo4D}"
+EEO_DATA_ROOT="${EEO_DATA_ROOT:-${REPO_ROOT}/data/EgoExo4D}"
 EEO_SPLIT="${EEO_SPLIT:-val}"
 IMAGE_DIR="${IMAGE_DIR:-${EEO_DATA_ROOT}/${EEO_SPLIT}}"
 RELATIONS="${RELATIONS:-${EEO_DATA_ROOT}/annotations/relations_${EEO_SPLIT}.json}"

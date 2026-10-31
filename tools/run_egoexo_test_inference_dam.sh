@@ -7,7 +7,7 @@ export PYTHONUNBUFFERED=1
 export PYTHONPATH="$REPO"
 export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}"
 
-TEST="${EEO_TEST_DIR:-/home/UNT/bf0191/Documents/bingfan_projects/dataset/EgoExo4D/test}"
+TEST="${EEO_TEST_DIR:-data/EgoExo4D/test}"
 CKPT="${CKPT:-$REPO/training/checkpoints_EgoExo/checkpoint.pt}"
 PYTHON="${PYTHON:-/opt/miniconda3/bin/python3}"
 # Hydra config name is relative to sam2/configs (no "configs/" prefix).

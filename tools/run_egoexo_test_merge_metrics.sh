@@ -18,7 +18,7 @@ cd "${REPO_ROOT}"
 
 export PYTHONPATH="${PYTHONPATH:+${PYTHONPATH}:}${REPO_ROOT}"
 
-EEO_DATA_ROOT="${EEO_DATA_ROOT:-/home/UNT/bf0191/Documents/bingfan_projects/dataset/EgoExo4D}"
+EEO_DATA_ROOT="${EEO_DATA_ROOT:-${REPO_ROOT}/data/EgoExo4D}"
 RELATIONS_TEST="${EEO_DATA_ROOT}/annotations/relations_test.json"
 GT_JSON="${EEO_DATA_ROOT}/gt_results/egoexo_test_gt.json"
 PYTHON="${PYTHON:-/opt/miniconda3/bin/python3}"

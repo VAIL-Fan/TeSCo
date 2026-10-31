@@ -23,7 +23,7 @@ dataset:
   # Local EgoExo train root (must contain per-take folders with annotation.json + rgb + the
   # dam_frame_captions_v2*/ caption subfolders, already present here via data/EgoExo4D -> the
   # canonical ../LM-EEC/data/EgoExo4D symlink set up during install; see README "Data setup").
-  img_folder: /home/UNT/bf0191/Documents/MLLM_EgoExo_Proposal/TeSCo/data/EgoExo4D/train
+  img_folder: data/EgoExo4D/train
   gt_folder: null
   file_list_txt: null
   multiplier: 2

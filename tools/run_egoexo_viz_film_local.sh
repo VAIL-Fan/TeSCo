@@ -7,7 +7,7 @@ cd "${REPO_ROOT}"
 export PYTHONPATH="${PYTHONPATH:+${PYTHONPATH}:}${REPO_ROOT}"
 export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}"
 
-EEO_DATA_ROOT="${EEO_DATA_ROOT:-/home/UNT/bf0191/Documents/bingfan_projects/dataset/EgoExo4D}"
+EEO_DATA_ROOT="${EEO_DATA_ROOT:-${REPO_ROOT}/data/EgoExo4D}"
 EEO_SPLIT="${EEO_SPLIT:-val}"
 IMAGE_DIR="${IMAGE_DIR:-${EEO_DATA_ROOT}/${EEO_SPLIT}}"
 RELATIONS="${RELATIONS:-${EEO_DATA_ROOT}/annotations/relations_${EEO_SPLIT}.json}"

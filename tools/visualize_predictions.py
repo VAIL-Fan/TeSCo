@@ -218,10 +218,10 @@ def visualize_video(vid, pred_masks, gt_masks, video_dir, output_path, show_obje
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--gt_file",   default="/home/UNT/bf0191/Documents/MLLM_EgoExo_Proposal/LM-EEC/data/EgoExo4D/gt_results/egoexo_test_gt.json")
-    parser.add_argument("--pred_file", default="/home/UNT/bf0191/Documents/MLLM_EgoExo_Proposal/LM-EEC-Mar17/LM-EEC/output/egoexo_test_results.json")
-    parser.add_argument("--image_dir", default="/home/UNT/bf0191/Documents/MLLM_EgoExo_Proposal/LM-EEC/data/EgoExo4D/test")
-    parser.add_argument("--output_dir", default="/home/UNT/bf0191/Documents/MLLM_EgoExo_Proposal/LM-EEC-Mar17/LM-EEC/visualizations")
+    parser.add_argument("--gt_file",   default="data/EgoExo4D/gt_results/egoexo_test_gt.json")
+    parser.add_argument("--pred_file", default="output/egoexo_test_results.json")
+    parser.add_argument("--image_dir", default="data/EgoExo4D/test")
+    parser.add_argument("--output_dir", default="output/visualizations")
     parser.add_argument("--num_videos", type=int, default=20)
     parser.add_argument(
         "--video_list_file",

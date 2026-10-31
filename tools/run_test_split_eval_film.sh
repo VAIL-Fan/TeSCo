@@ -18,7 +18,7 @@ cd "${REPO_ROOT}"
 export PYTHONPATH="${PYTHONPATH:+${PYTHONPATH}:}${REPO_ROOT}"
 export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}"
 
-EEO_DATA_ROOT="${EEO_DATA_ROOT:-/home/UNT/bf0191/Documents/bingfan_projects/dataset/EgoExo4D}"
+EEO_DATA_ROOT="${EEO_DATA_ROOT:-${REPO_ROOT}/data/EgoExo4D}"
 TEST_DIR="${EEO_DATA_ROOT}/test"
 RELATIONS_TEST="${EEO_DATA_ROOT}/annotations/relations_test.json"
 GT_JSON="${EEO_DATA_ROOT}/gt_results/egoexo_test_gt.json"
