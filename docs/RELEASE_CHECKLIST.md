@@ -28,7 +28,7 @@ Measured on the working tree:
 | tracked files (before the cleanup below) | **629,025**, nearly all of them generated captions |
 | `.git/objects` — the actual history | **52 MB** |
 | `.git/lfs` — the weight cache | **5.6 GB** |
-| configured remote | `origin git@github.com:fb-reps/TeSCo.git` — already set |
+| configured remote | `origin git@github.com:VAIL-Fan/TeSCo.git` — already set |
 
 `.gitattributes` already routes `*.pt` and `*.pth` through Git LFS, and it is working: the
 checkpoints are committed as 134-byte pointers, not as blobs. **GitHub's 100 MB per-file limit is

@@ -2,7 +2,7 @@
 
 **Exploiting Textual Semantics for Robust Cross-View Object Correspondence** — NeurIPS 2026
 
-[**Project page**](https://fb-reps.github.io/TeSCo/page/) · [Paper](#citation) · [Results](#results) · [Video results](https://fb-reps.github.io/TeSCo/page/#clips)
+[**Project page**](https://vail-fan.github.io/TeSCo/page/) · [Paper](#citation) · [Results](#results) · [Video results](https://vail-fan.github.io/TeSCo/page/#clips)
 
 Given an object marked in one camera's video, segment the same object in another camera's video
 of the same scene. TeSCo describes the object in words first, then uses that description to find
