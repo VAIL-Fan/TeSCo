@@ -109,28 +109,6 @@ python evaluation/unified_eval.py --gt data/gt_results/egoexo_test_gt.json \
 
 Training and every flag: [`docs/SETUP.md`](docs/SETUP.md).
 
-## Four scorers, and why
-
-Published results on this benchmark are not all on the same protocol, so each one is here and
-runnable:
-
-| | protocol | what it does |
-|---|---|---|
-| `evaluation/v2sam_eval.py` | **V²-SAM** — the convention this paper follows | flat `inter/(union+1e-6)`; no resize; keeps rows whose GT is empty. IoU and Dice only |
-| `evaluation/unified_eval.py` | **official benchmark** — use this for Cont.A and Loc.E | walks the GT, scores a missing prediction as 0, puts both sides on a 480×480 grid |
-| `evaluation/compute_metrics.py` | **LM-EEC** — this codebase's inherited scorer | walks the prediction file; a row you did not predict is omitted |
-| `evaluation/omama_eval.py` | **O-MaMa** | walks the GT, filters by `annotated_frames`, resizes the GT onto your prediction's grid |
-
-**Our reported numbers are on the V²-SAM convention**, which the paper states it follows. That
-costs nothing in interpretability, because on identical predictions our Exo→Ego scores **74.14**
-under V²-SAM's own metric, **74.18** under the official scorer and **74.18** under LM-EEC's —
-agreement to 0.04, since this model predicts at the GT's own 480×480 and only 6 of 13,866 rows
-have an empty ground truth. O-MaMa's scorer is the one that differs, at **72.92**.
-[`docs/RESULTS.md`](docs/RESULTS.md) §3 has all five measurements and the cause of that gap.
-
-V²-SAM's released code ships only a flat `inter/(union+1e-6)` IoU and Dice — it contains no
-contour or location metric, so the Cont.A and Loc.E columns of its own table came from code that
-was not released.
 
 ## Citation
 
