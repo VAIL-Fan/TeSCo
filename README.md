@@ -132,42 +132,6 @@ V²-SAM's released code ships only a flat `inter/(union+1e-6)` IoU and Dice — 
 contour or location metric, so the Cont.A and Loc.E columns of its own table came from code that
 was not released.
 
-## What is and isn't reproducible here
-
-Stated plainly, because a results table that hides this is worth less than one that does not:
-
-- **Exo→Ego reproduces.** `tesco_egoexo4d_epoch59_for_inference.pt` is bit-identical to the
-  checkpoint behind the published number and scores 70.48.
-- **Ego→Exo does not.** Neither bundled checkpoint is the one behind the published 60.40 — they
-  belong to a different model variant this code cannot load.
-  [`docs/REPRODUCE.md`](docs/REPRODUCE.md) §2 shows the state-dict diff.
-- **`dam_frame_captions_v2_exo` covers 201 of 291 test takes.** A take with no captions does not
-  raise; it silently produces a confounded prediction. Check with
-  `python tools/check_captions.py` before any long run.
-
-## Documentation
-
-| | |
-|---|---|
-| [`docs/METRIC_SETTINGS.md`](docs/METRIC_SETTINGS.md) | what separates the scorers, and our results under each |
-| [`docs/RESULTS.md`](docs/RESULTS.md) | Table 1 row by row — which rows we re-measured and which we cite |
-| [`docs/REPRODUCE.md`](docs/REPRODUCE.md) | exact commands, checkpoint ↔ direction, protocol-sensitivity ablations |
-| [`docs/SETUP.md`](docs/SETUP.md) | environment, datasets, text labels, checkpoints, training, all flags |
-| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | architecture ↔ code, file by file |
-| [`docs/ANNOTATION_FORMATS.md`](docs/ANNOTATION_FORMATS.md) | `annotation.json` and GT JSON schemas |
-| [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md) | what to settle before publishing this repo |
-
-Verification helpers, each of which reproduces a figure quoted in the docs:
-`tools/check_gt.py`, `tools/check_captions.py`, `tools/diff_checkpoints.py`,
-`tools/make_selftest_pred.py`.
-
-## Known limitations
-
-- No checkpoint is included for a text-ablated baseline. The code handles `text_feat is None`
-  by skipping ITFR/TCF, but that path is not validated as an ablation baseline.
-- This repository consolidates an iterative research codebase into one tree — treat it as a
-  reference implementation and spot-check before building on it.
-
 ## Citation
 
 ```bibtex
