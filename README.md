@@ -30,52 +30,6 @@ Ego-Exo4D correspondence test split:
 
 Text is worth **9.85 mIoU** over the same model without it.
 
-> **Every row above is on one convention — the one V²-SAM's table established.** We traced each
-> comparison row to its source paper and all nine locatable ones match digit for digit; seven come
-> from V²-SAM's Table 1, which itself quotes five from O-MaMa's.
-> [`docs/RESULTS.md`](docs/RESULTS.md) has the trace.
->
-> Scored with V²-SAM's own released metric, our Exo→Ego predictions give **74.14** against
-> **74.18** under the official benchmark scorer — the two agree to 0.04. O-MaMa's scorer is the
-> outlier at **72.92**, because it resizes the 1408² ground truth onto the prediction rather than
-> putting both on the benchmark's 480×480 grid. That 1.3-point difference is inherited through the
-> citation chain, not introduced here.
-
-## What the text actually is
-
-<p align="center"><img src="assets/gen_text.png" width="100%"></p>
-
-A vision-language model (DAM) describes the marked object in the query view — category, colour,
-texture, material. These attributes hold across viewpoints in a way raw pixels do not, which is
-the whole premise. The paper refreshes the description **every frame**; refreshing less often is
-cheaper and measurably worse (60.40 at every frame, 59.10 every 5, 59.00 every 10). Captions are
-precomputed per frame with `tools/precompute_dam_frame_captions.py` and read from
-`text_labels/`, so inference does not call the VLM.
-
-## Why text helps
-
-<p align="center"><img src="assets/att_map.png" width="100%"></p>
-
-Attention in the search view, with textual semantics (c) and without (d). The text pulls
-attention onto the target instead of spreading it over visually similar regions.
-
-## The two modules
-
-| ITFR — iterative textual feature refinement | TCF — text-conditioned cross-modal fusion |
-|---|---|
-| <img src="assets/ITF.png" width="100%"> | <img src="assets/TCF.png" width="100%"> |
-| Not every word in a caption applies to the current search-view frame. ITFR adjusts the text feature against that frame before fusion, for `K=2` iterations. | Injects the refined text into visual features by text-guided modulation, producing the multimodal target representation the mask decoder consumes. |
-
-[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) maps each of these to the code, file by file.
-
-## Qualitative results
-
-| Ego→Exo | Exo→Ego |
-|---|---|
-| <img src="assets/egoexo.png" width="100%"> | <img src="assets/exoego.png" width="100%"> |
-
-Left to right in each: query view, baseline, TeSCo, search view with ground truth.
-
 ## Quick start
 
 ```bash
