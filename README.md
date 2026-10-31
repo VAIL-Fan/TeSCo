@@ -68,8 +68,7 @@ Training and every flag: [`docs/SETUP.md`](docs/SETUP.md).
 
 ```bibtex
 @inproceedings{tesco2026,
-  author  = {Fan, Bing and Feng, Yunhe and Huang, Yan
-             and Fan, Heng},
+  author  = {Fan, Bing and Feng, Yunhe and Huang, Yan and Fan, Heng},
   title     = {Exploiting Textual Semantics for Robust Cross-View Object Correspondence},
   booktitle = {Advances in Neural Information Processing Systems},
   year      = {2026}
